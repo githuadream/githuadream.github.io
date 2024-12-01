@@ -1,0 +1,120 @@
+<p>So today we are going to be making pause menus in unity.</p>
+
+<p class="note info">Currently I am using <code class="language-plaintext highlighter-rouge">Unity 2019.4.10</code>, So this can be applicable for future versions and maybe some older ones too.</p>
+
+<p>I have a pre-prepared scene with only particles moving randomly. <br />
+<br />
+<br />
+<a href="/biochem_atlas/zips/BlurShader.zip"><button>Download Assets <i class="fas fa-download"></i></button></a> <br />
+<br />
+<br />
+Lets start by creating a C# script and call it GameManager.cs <br />
+so this is the default script you will get</p>
+
+<figure class="highlight"><pre><code class="language-cs" data-lang="cs">    <span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+    <span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+    <span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">GameManager</span> <span class="p">:</span> <span class="n">MonoBehaviour</span><span class="p">{</span>
+        
+        <span class="c1">//Use..</span>
+        <span class="k">void</span> <span class="nf">Start</span><span class="p">(){</span>
+            
+        <span class="p">}</span>
+
+        <span class="c1">//....</span>
+        <span class="k">void</span> <span class="nf">Update</span><span class="p">(){</span>
+
+        <span class="p">}</span>
+    <span class="p">}</span></code></pre></figure>
+
+<p><br />
+<br />
+You can remove both the comments. <br />
+First create a canvas with all the elements to be displayed when the game is paused and disable it.<br />
+Rename the canvas to PauseCanvas or what you choose.</p>
+
+<p>We will use Time.timeScale to change the active state of the game. <br />
+When its value is 0 then the game will like stop and if it is 1 it will run properly. 
+It is like the speed of the game, it won`t work or move if it 0. <br />
+We will create 2 functions Resume and Pause and change the timeScale value here.</p>
+
+<figure class="highlight"><pre><code class="language-cs" data-lang="cs">    <span class="k">void</span> <span class="nf">Pause</span><span class="p">(){</span>
+        <span class="n">Time</span><span class="p">.</span><span class="n">timeScale</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">void</span> <span class="nf">Resume</span><span class="p">(){</span>
+        <span class="n">Time</span><span class="p">.</span><span class="n">timeScale</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+    <span class="p">}</span></code></pre></figure>
+
+<p>And we will modify the visibility of the pause menu too.
+So the with the additional code it will be</p>
+
+<figure class="highlight"><pre><code class="language-cs" data-lang="cs">    <span class="k">void</span> <span class="nf">Pause</span><span class="p">(){</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">pauseCanvas</span> <span class="p">!=</span> <span class="k">null</span><span class="p">){</span>
+            <span class="n">pauseCanvas</span><span class="p">.</span><span class="n">gameObject</span><span class="p">.</span><span class="nf">SetActive</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+            <span class="n">Time</span><span class="p">.</span><span class="n">timeScale</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">Resume</span><span class="p">(){</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">pauseCanvas</span> <span class="p">!=</span> <span class="k">null</span><span class="p">){</span>
+            <span class="n">pauseCanvas</span><span class="p">.</span><span class="n">gameObject</span><span class="p">.</span><span class="nf">SetActive</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+            <span class="n">Time</span><span class="p">.</span><span class="n">timeScale</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span></code></pre></figure>
+
+<p>And we will disable the pause menu on start.</p>
+
+<figure class="highlight"><pre><code class="language-cs" data-lang="cs">    <span class="k">private</span> <span class="k">void</span> <span class="nf">Start</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">pauseCanvas</span> <span class="p">!=</span> <span class="k">null</span><span class="p">){</span>
+            <span class="n">pauseCanvas</span><span class="p">.</span><span class="n">gameObject</span><span class="p">.</span><span class="nf">SetActive</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span></code></pre></figure>
+
+<p>So this is the Final Script.</p>
+
+<figure class="highlight"><pre><code class="language-cs" data-lang="cs">    <span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+    <span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+    <span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">GameManager</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
+    <span class="p">{</span>
+        <span class="err">#</span><span class="n">region</span> <span class="n">Variables</span>
+        <span class="k">public</span> <span class="n">Canvas</span> <span class="n">pauseCanvas</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+        <span class="err">#</span><span class="n">endregion</span>
+        <span class="k">private</span> <span class="k">void</span> <span class="nf">Start</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">pauseCanvas</span> <span class="p">!=</span> <span class="k">null</span><span class="p">){</span>
+                <span class="n">pauseCanvas</span><span class="p">.</span><span class="n">gameObject</span><span class="p">.</span><span class="nf">SetActive</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">void</span> <span class="nf">Pause</span><span class="p">(){</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">pauseCanvas</span> <span class="p">!=</span> <span class="k">null</span><span class="p">){</span>
+                <span class="n">pauseCanvas</span><span class="p">.</span><span class="n">gameObject</span><span class="p">.</span><span class="nf">SetActive</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+                <span class="n">Time</span><span class="p">.</span><span class="n">timeScale</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">Resume</span><span class="p">(){</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">pauseCanvas</span> <span class="p">!=</span> <span class="k">null</span><span class="p">){</span>
+                <span class="n">pauseCanvas</span><span class="p">.</span><span class="n">gameObject</span><span class="p">.</span><span class="nf">SetActive</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+                <span class="n">Time</span><span class="p">.</span><span class="n">timeScale</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">private</span> <span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="nf">GetKey</span><span class="p">(</span><span class="s">"escape"</span><span class="p">)){</span>
+                <span class="nf">Pause</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span></code></pre></figure>
+
+<p><br />
+<br />
+Now go into the unity editor and hit play. <br />
+Everything should work as expected. <br />
+Hit the Escape key to pause the game. <br />
+<br />
+<br />
+<a href="https://github.com/NrdyBhu1/Custom-Mouse-Cursor/archive/master.zip"><button>Download project files <i class="fas fa-download"></i></button></a></p>

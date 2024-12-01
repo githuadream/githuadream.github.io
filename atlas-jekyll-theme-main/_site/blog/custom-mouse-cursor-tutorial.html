@@ -1,0 +1,99 @@
+<p>So today we are going to be making custom mouse cursor in unity.</p>
+
+<p class="note info">Currently I am using <code class="language-plaintext highlighter-rouge">Unity 2019.4.10</code>, So this can be applicable for future versions and maybe some older ones too.</p>
+
+<p>We shall start with the default <code class="language-plaintext highlighter-rouge">Sample Scene</code> <br />
+<br />
+I use <a href="https://code.visualstudio.com">VS-Code IDE</a> as it is light weight, but you can use any IDE of your choice. <br />
+Download the assets here to get started along with me. <br />
+<br />
+<br />
+<a href="/biochem_atlas/zips/Assets.zip"><button>Download Assets <i class="fas fa-download"></i></button></a> <br />
+<br />
+<br />
+Lets start by creating a C# script and call it GameManager.cs <br />
+so this is the default script you will get</p>
+
+<figure class="highlight"><pre><code class="language-cs" data-lang="cs">    <span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">GameManager</span> <span class="p">:</span> <span class="n">MonoBehaviour</span><span class="p">{</span>
+        
+        <span class="c1">//Use..</span>
+        <span class="k">void</span> <span class="nf">Start</span><span class="p">(){</span>
+            
+        <span class="p">}</span>
+
+        <span class="c1">//....</span>
+        <span class="k">void</span> <span class="nf">Update</span><span class="p">(){</span>
+
+        <span class="p">}</span>
+    <span class="p">}</span></code></pre></figure>
+
+<p><br />
+<br />
+You can remove both the comments. <br />
+First we are going to declare 2 texture2ds before our start function and call them hand and pointer.</p>
+
+<figure class="highlight"><pre><code class="language-cs" data-lang="cs">    <span class="k">public</span> <span class="n">Texture2D</span> <span class="n">pointer</span><span class="p">;</span>
+    <span class="k">public</span> <span class="n">Texture2D</span> <span class="n">hand</span><span class="p">;</span></code></pre></figure>
+
+<p><br />
+<br />
+You can delete the Update function but leave the Start function as it is. <br />
+Now we will create 2 functions and call it setPointer and setHand.</p>
+
+<figure class="highlight"><pre><code class="language-cs" data-lang="cs">    <span class="k">public</span> <span class="k">void</span> <span class="nf">setHand</span><span class="p">(){</span>
+        
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">setPointer</span><span class="p">(){</span>
+        
+    <span class="p">}</span></code></pre></figure>
+
+<p><br />
+<br />
+You can use Cursor.SetCursor() function to set the cursor through script. <br />
+It requires 3 parameters texture vector2 hotspot and cursormode. <br />
+We`ll set the hotspot to 0,0 and cursormode to force-software.</p>
+
+<figure class="highlight"><pre><code class="language-cs" data-lang="cs">    <span class="k">public</span> <span class="k">void</span> <span class="nf">setHand</span><span class="p">(){</span>
+        <span class="n">Cursor</span><span class="p">.</span><span class="nf">SetCursor</span><span class="p">(</span><span class="n">hand</span><span class="p">,</span> <span class="k">new</span> <span class="nf">Vector2</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">),</span> <span class="n">CursorMode</span><span class="p">.</span><span class="n">ForceSoftware</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">setPointer</span><span class="p">(){</span>
+        <span class="n">Cursor</span><span class="p">.</span><span class="nf">SetCursor</span><span class="p">(</span><span class="n">pointer</span><span class="p">,</span> <span class="k">new</span> <span class="nf">Vector2</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">),</span> <span class="n">CursorMode</span><span class="p">.</span><span class="n">ForceSoftware</span><span class="p">);</span>
+    <span class="p">}</span></code></pre></figure>
+
+<p><br />
+<br />
+And so this is the final script.</p>
+
+<figure class="highlight"><pre><code class="language-cs" data-lang="cs">    <span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">GameManager</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="n">Texture2D</span> <span class="n">pointer</span><span class="p">;</span>
+        <span class="k">public</span> <span class="n">Texture2D</span> <span class="n">hand</span><span class="p">;</span>
+
+        <span class="k">void</span> <span class="nf">Start</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="nf">setPointer</span><span class="p">();</span>
+            <span class="c1">//setting the cursor to pointer on start</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">setHand</span><span class="p">(){</span>
+            <span class="n">Cursor</span><span class="p">.</span><span class="nf">SetCursor</span><span class="p">(</span><span class="n">hand</span><span class="p">,</span> <span class="k">new</span> <span class="nf">Vector2</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">),</span> <span class="n">CursorMode</span><span class="p">.</span><span class="n">ForceSoftware</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">setPointer</span><span class="p">(){</span>
+            <span class="n">Cursor</span><span class="p">.</span><span class="nf">SetCursor</span><span class="p">(</span><span class="n">pointer</span><span class="p">,</span> <span class="k">new</span> <span class="nf">Vector2</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">),</span> <span class="n">CursorMode</span><span class="p">.</span><span class="n">ForceSoftware</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span></code></pre></figure>
+
+<p><br />
+<br />
+Now go into the unity editor and hit play. <br />
+Everything should work as expected. <br />
+<br />
+<br />
+<a href="https://github.com/NrdyBhu1/Custom-Mouse-Cursor/archive/master.zip"><button>Download project files <i class="fas fa-download"></i></button></a></p>
